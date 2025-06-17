@@ -5,7 +5,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import stone.hyperquarry.Proxy;
@@ -65,13 +64,20 @@ public class GuiFilter extends GuiScreen {
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawFilter();
-
+        this
+            .drawString(fontRenderer,
+                "left, right, or middle click for on, off, or toggling of items, click dragging is supported",
+                i, j - 20, 0xFFFFFFFF);
+        this
+            .drawString(fontRenderer, "green means make this item, red means trash this item", i,
+                j + ySize - 14, 0xFFFFFFFF);
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawString(fontRenderer,
-                "left, right, or middle click for on, off, or toggling of items, click dragging is supported", i,
-                j - 20, 0xFFFFFFFF);
-        this.drawString(fontRenderer, "green means make this item, red means trash this item",
-                i, j + ySize - 14, 0xFFFFFFFF);
+        int mouseIndex = flattenMouse(mouseX, mouseY);
+        if (mouseIndex != -1)
+        {
+            this.renderToolTip(list.getStack(mouseIndex, (byte) 1), mouseX, mouseY);
+        }
+
     }
 
     public void drawFilter() {
@@ -167,6 +173,24 @@ public class GuiFilter extends GuiScreen {
 
     private int flatten(int i, int j) {
         return i + j * COLUMNS;
+    }
+
+    private int flattenMouse(int mouseX, int mouseY) {
+        int startX = (this.width - this.xSize) / 2;
+        int startY = (this.height - this.ySize) / 2;
+
+        int normalizedX = (mouseX - startX + 1) / ITEM_SIZE;
+        int normalizedY = (mouseY - startY + 1) / ITEM_SIZE;
+
+        if (normalizedX >= 0 && normalizedX < COLUMNS) {
+            if (normalizedY >= 0 && normalizedY < ROWS) {
+                int flattened = flatten(normalizedX, normalizedY);
+                if (flattened >= this.list.items().length)
+                    return -1;
+                return flattened;
+            }
+        }
+        return -1;
     }
 
     @Override
