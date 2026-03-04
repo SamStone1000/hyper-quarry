@@ -1,7 +1,9 @@
 package stone.hyperquarry;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import stone.hyperquarry.client.GuiFilter;
 import stone.hyperquarry.client.GuiQuarry;
@@ -11,8 +13,9 @@ public class Client extends Server {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-
-
+        // I hate Minecraft
+        ModelLoader.setCustomModelResourceLocation(HyperQuarry.QUARRY_ITEM, 0,
+                                                   new ModelResourceLocation("hyper_quarry:quarry", "inventory"));
     }
 
     // super jank, but can't be bothered to do it the correct way

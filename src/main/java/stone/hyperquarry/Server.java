@@ -50,7 +50,7 @@ public class Server {
     @SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> evt) {
         IForgeRegistry<Item> r = evt.getRegistry();
-        r.register(new ItemQuarry(HyperQuarry.QUARRY));
+        r.register(HyperQuarry.QUARRY_ITEM);
         GameRegistry
             .registerTileEntity(TileEntityQuarry.class, HyperQuarry.toLocation("quarry"));
     }

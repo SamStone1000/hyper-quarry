@@ -1,5 +1,7 @@
 package stone.hyperquarry;
 
+import stone.hyperquarry.common.ItemQuarry;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +18,7 @@ public class HyperQuarry {
     public static final Logger LOGGER = LogManager.getLogger(Tags.MODID);
     
     public static final BlockQuarry QUARRY = new BlockQuarry();
+    public static final ItemQuarry QUARRY_ITEM = new ItemQuarry(HyperQuarry.QUARRY);
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
